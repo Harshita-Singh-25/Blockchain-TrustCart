@@ -7,7 +7,7 @@ pragma solidity ^0.8.24;
  * Handles participant registration, product lifecycle transitions, custody transfers,
  * tamper-evident history logging, and data hash integrity.
  */
-contract SupplyChain {
+contract SupplyChainCore {
     // ---------- Types ----------
     enum Role {
         None,
@@ -360,3 +360,11 @@ contract SupplyChain {
         if (bytes(s).length > max) revert StringTooLong();
     }
 }
+
+contract ParticipantRegistry is SupplyChainCore {}
+
+contract ProductRegistry is ParticipantRegistry {}
+
+contract TransferManager is ProductRegistry {}
+
+contract SupplyChain is TransferManager {}
